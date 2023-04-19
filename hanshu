@@ -1,0 +1,19 @@
+const cloud = require('wx-server-sdk')
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV,
+})
+exports.main = async (event, context) => {
+  try {
+    const result = await cloud.openapi.cloudbase.sendSms({
+      "env": '输入自己的环境ID',
+      content: '验证码为：' + event.testcode,
+      "phoneNumberList": [
+        "+86" + event.phone
+      ],
+      
+    })
+    return result
+  } catch (err) {
+    return err
+  }
+}
